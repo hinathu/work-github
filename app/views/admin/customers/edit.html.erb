@@ -1,0 +1,62 @@
+<!--顧客情報編集画面-->
+<div class="container my-5">
+  <%= render 'admin/header' %>
+
+<div class="row mt-5">
+  <h3><%= @customer.last_name %><%= @customer.first_name %>さんの会員編集</h3>
+</div>
+
+<div class="row d-flex justify-content-center">
+  <% if flash[:customer_updated_error] %>
+    <span class="text-danger"><%= flash[:customer_updated_error] %></span>
+  <% end %>
+</div>
+
+<div class="row mt-5 flex-column align-items-center">
+  <%= form_with model: @customer, url: admin_customer_path, method: :patch do |f| %>
+  <table class="table table-borderless">
+    <tbody>
+      <tr>
+        <td>会員Id</td>
+        <td><%= @customer.id %></td>
+      </tr>
+      <tr>
+        <td>氏名</td>
+        <td><%= f.text_field :last_name %><%= f.text_field :first_name %></td>
+      </tr>
+      <tr>
+        <td>フリガナ</td>
+        <td><%= f.text_field :last_name_kana %><%= f.text_field :first_name_kana %></td>
+      </tr>
+      <tr>
+        <td>郵便番号</td>
+        <td><%= f.number_field :postal_code %></td>
+      </tr>
+      <tr>
+        <td>住所</td>
+        <td><%= f.text_area :address %></td>
+      </tr>
+      <tr>
+        <td>電話番号</td>
+        <td><%= f.telephone_field :telephone_number %></td>
+      </tr>
+      <tr>
+        <td>メールアドレス</td>
+        <td><%= f.email_field :email %></td>
+      </tr>
+      <tr>
+        <td>会員ステータス</td>
+        <td>
+          <%= f.radio_button :is_deleted, :false %> <span>有効</span>
+          <%= f.radio_button :is_deleted, :true %> <span>退会</span>
+        </td>
+      </tr>
+      <tr>
+        <td></td>
+        <td><%= f.submit '変更を保存', class: "btn btn-success mx-auto" %></td>
+      </tr>
+    </tbody>
+  </table>
+  <% end %>
+</div>
+</div>

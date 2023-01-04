@@ -1,0 +1,42 @@
+<!--商品詳細ページ-->
+<div class="container my-5">
+  <%= render 'public/header' %>
+
+<div class="row mt-5">
+  <h3>商品詳細</h3>
+</div>
+
+<div class="row mt-5">
+  <div class="col-5">
+    <%= image_tag @item.image, size: "300x300" %>
+  </div>
+
+  <div class="col-5">
+    <!--商品名-->
+    <div class="row">
+      <h4>
+        <strong><%= @item.name %></strong>
+      </h4>
+    </div>
+
+    <!--商品説明-->
+    <div class="row mt-3">
+      <p><%= @item.introduction %></p>
+    </div>
+
+    <!--値段-->
+    <div class="row mt-3">
+      <h5>¥<%= @item.add_tax_price.to_s(:delimited) %>（税込）</h5>
+    </div>
+
+    <div class="row mt-3">
+      <%= form_with model: @cart_item, url: cart_items_path, method: :post do |f| %>
+        <%= f.select :amount, *[1..10] %>
+        <%= f.hidden_field :item_id, :value => @item.id %>
+        <%= f.submit 'カートに入れる', class: "btn btn-success ml-3" %>
+      <% end %>
+    </div>
+  </div>
+</div>
+
+</div>

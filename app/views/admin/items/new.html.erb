@@ -1,0 +1,52 @@
+<!--商品新規登録画面-->
+<div class="container my-5">
+  <%= render 'admin/header' %>
+
+<div class="row mt-5">
+  <h3>商品新規登録</h3>
+</div>
+
+  <div class="row d-flex justify-content-center">
+    <% if flash[:item_created_error] %>
+      <span class="text-danger"><%= flash[:item_created_error] %></span>
+    <% end %>
+  </div>
+
+  <%= form_with model: @item, url: admin_items_path, method: :post do |f| %>
+  <table class="table text-left table-borderless">
+    <tbody>
+        <tr>
+          <td>商品画像</td>
+          <td><%= f.file_field :image, accept: "image/*" %></td>
+        </tr>
+        <tr>
+          <td>商品名</td>
+          <td><%= f.text_field :name %></td>
+        </tr>
+        <tr>
+          <td>商品説明</td>
+          <td><%= f.text_area :introduction %></td>
+        </tr>
+        <tr>
+          <td>ジャンル</td>
+          <td><%= f.collection_select :genre_id, Genre.all, :id, :name %></td>
+        </tr>
+        <tr>
+          <td>税抜価格</td>
+          <td><%= f.text_field :price %>円</td>
+        </tr>
+        <tr>
+          <td>販売ステータス</td>
+          <td>
+            <%= f.radio_button :is_active, :true %> <span>販売中</span>
+            <%= f.radio_button :is_active, :false %> <span>販売停止中</span>
+          </td>
+        </tr>
+        <tr>
+          <td></td>
+          <td><%= f.submit '新規登録', class: "btn btn-success mt-3 mx-auto" %></td>
+        </tr>
+      </tbody>
+  </table>
+  <% end %>
+</div>

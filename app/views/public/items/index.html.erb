@@ -1,0 +1,32 @@
+<!--商品一覧ページ-->
+<div class="container my-5">
+  <%= render 'public/header' %>
+
+<div class="row mt-5">
+  <h3>商品一覧</h3>
+</div>
+
+<div class="row">
+  <% @items.each do |item| %>
+
+  <div class="col-3 mt-3">
+    <%= link_to item_path(item.id) do %>
+      <%= image_tag item.image, size: "150x150" %></br>
+    <span>
+      <%= item.name  %>
+      <% end %>
+    </span></br>
+    <span>¥<%= item.add_tax_price.to_s(:delimited) %>（税込）</span>
+  </div>
+  <% end %>
+</div>
+
+<div class="container">
+	<div class="row">
+	 <div class="col-md-4 offset-md-4 py-2 mt-5">
+	 	<%= paginate @items %>
+	 </div>
+	</div>
+ </div>
+
+</div>

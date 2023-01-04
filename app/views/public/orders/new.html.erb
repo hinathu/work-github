@@ -1,0 +1,73 @@
+<!--注文情報入力画面(支払方法・配送先の選択)-->
+
+<div class="container my-5">
+    <%= render 'public/header' %>
+
+    <div class="row mt-5">
+        <h3>注文情報入力</h3>
+    </div>
+
+    <div class="row mt-5">
+        <%= form_with model: @order, url: comfirm_path, method: :post do |f| %>
+        <h5>
+            <strong>支払方法</strong>
+        </h5>
+        <%= f.radio_button :payment_method, Order.payment_methods.key(1) %>
+        <%= f.label :payment_method_credit_card, "クレジットカード" %></br>
+
+         <%= f.radio_button :payment_method, Order.payment_methods.key(2) %>
+         <%= f.label :payment_method_transfer, "銀行振込" %>
+    </div>
+
+    <div class="row mt-5">
+        <h5>
+            <strong>お届け先</strong>
+        </h5>
+    </div>
+
+    <!--選択1：ご自身の住所-->
+    <div class="row mt-3">
+        <%= f.radio_button :select, 0 %>
+        ご自身の住所
+    </div>
+    <div class="row ml-2">
+        <%= "〒" + @user.postal_code %>
+        <%= @user.address %> </br>
+        <%= @user.last_name + @user.first_name %></br>
+    </div>
+
+    <!--選択2：登録済みの住所-->
+    <div class="row mt-3">
+        <%= f.radio_button :select, 1 %>
+        登録済住所から選択
+    </div>
+    <div class="row ml-2">
+        <%= f.select :address_id, options_from_collection_for_select(@addresses, :id, :address_display) %></br>
+    </div>
+
+    <!--選択3：新規登録先住所-->
+    <div class="row mt-3">
+        <%= f.radio_button :select, 2 %>
+        新しいお届け先
+    </div>
+    <div class="row ml-2">
+        <table class="table table-borderless">
+            <tbody>
+                <tr>
+                    <td width="150">郵便番号(ハイフンなし)</td>
+                    <td width="500"><%= f.number_field :shipping_postal_code %></td>
+                </tr>
+                <tr>
+                    <td>住所</td>
+                    <td><%= f.text_area :shipping_address %></td>
+                </tr>
+                <tr>
+                    <td>宛名</td>
+                    <td><%= f.text_field :shipping_name %></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+        <%= f.submit '確認画面へ進む', class: "btn btn-success" %>
+        <% end %>
+</div>

@@ -1,0 +1,71 @@
+<div class="container my-5">
+  <%= render 'public/header' %>
+
+<div class="row mt-5">
+  <h2>新規会員登録</h2>
+</div>
+
+  <div class="row mt-5">
+      <%= form_with model: @customer, url: customer_registration_path do |f| %>
+        <%= render "public/shared/error_messages", resource: resource %>
+
+        <span>名前</span>
+        <div class="field">
+          <%= f.label :（性） %>
+          <%= f.text_field :last_name %>
+          <%= f.label :（名） %>
+          <%= f.text_field :first_name %>
+        </div>
+
+       <span>フリガナ</span>
+        <div class="field">
+          <%= f.label :（セイ） %>
+          <%= f.text_field :last_name_kana %>
+          <%= f.label :（メイ） %>
+          <%= f.text_field :first_name_kana %>
+        </div>
+
+        <div class="field">
+          <%= f.label :メールアドレス %>
+          <%= f.email_field :email, autofocus: true, autocomplete: "email" %>
+        </div>
+
+        <div class="field">
+          <%= f.label :郵便番号（ハイフンなし） %>
+          <%= f.text_field :postal_code %>
+        </div>
+
+          <div class="field">
+          <%= f.label :住所 %>
+          <%= f.text_field :address %>
+        </div>
+
+          <div class="field">
+          <%= f.label :電話番号（ハイフンなし） %>
+          <%= f.text_field :telephone_number %>
+        </div>
+
+        <div class="field">
+          <%= f.label :パスワード %>
+          <% if @minimum_password_length %>
+          <span>(<%= @minimum_password_length %> 文字以上)</span>
+          <% end %><br />
+          <%= f.password_field :password, autocomplete: "new-password" %>
+        </div>
+
+        <div class="field">
+          <%= f.label :パスワード（確認用） %><br />
+          <%= f.password_field :password_confirmation, autocomplete: "new-password" %>
+        </div>
+
+        <div class="actions">
+          <%= f.submit "新規登録" %>
+        </div>
+      <% end %>
+    </div>
+
+    <div class="row mt-5">
+      <p>既に登録済みの方</p>
+      <%= render "public/shared/links" %>
+    </div>
+</div>

@@ -1,0 +1,54 @@
+<!--配送先登録/一覧画面ページ-->
+<div class="container my-5">
+    <%= render 'public/header' %>
+
+    <div class="row mt-5">
+        <h3>配送先登録/一覧</h3>
+    </div>
+
+    <div class="row mt-5">
+      <div class="offset-sm-1 col-sm-4">
+        <div class="row d-flex justify-content-center">
+          <% if flash[:address_created_error] %>
+            <span class="text-danger"><%= flash[:address_created_error] %></span>
+          <% end %>
+         </div>
+        <%= form_with model: @newaddress, url: addresses_path, method: :post do |f| %>
+            <p>郵便番号（ハイフンなし）</p>
+            <%= f.number_field :postal_code %>
+            <p>住所</p>
+            <%= f.text_area :address %>
+            <p>宛名</p>
+            <%= f.text_field :name %>
+
+            <%= f.submit '新規登録', class: "btn btn-success" %>
+        <% end %>
+      </div>
+     </div>
+
+     <div class="row mt-5">
+         <table border="1" class="table1">
+             <thead>
+                 <tr>
+                     <th width="150">郵便番号</th>
+                     <th width="400">住所</th>
+                     <th width="150">宛名</th>
+                     <th width="250"></th>
+                 </tr>
+             </thead>
+             <tbody>
+                 <% @addresses.each do |address| %>
+                     <tr>
+                         <td><%= address.postal_code %></td>
+                         <td><%= address.address %></td>
+                         <td><%= address.name %></td>
+                         <td>
+                             <%= link_to "編集する", edit_address_path(address.id), class: "btn btn-success ml-4" %>
+                             <%= link_to "削除する", address_path(address.id), method: :delete, "data-confirm" => "本当に削除しますか？", class: "btn btn-danger ml-4" %>
+                         </td>
+                     </tr>
+                 <% end %>
+             </tbody>
+         </table>
+    </div>
+</div>
